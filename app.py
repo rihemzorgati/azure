@@ -1,32 +1,24 @@
-import os
 
-from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for)
+from flask import Flask
 
 app = Flask(__name__)
 
-
-@app.route('/')
+@app.route("/")
 def index():
-   print('Request for index page received')
-   return render_template('index.html')
+    return """
+    <h1>Bienvenue dans notre école privée</h1>
+    <p>Application Flask hébergée sur Microsoft Azure.</p>
+    <h2>Nos formations</h2>
+    <ul>
+        <li>Informatique</li>
+        <li>Cloud Computing</li>
+        <li>Intelligence Artificielle</li>
+    </ul>
+    """
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@app.route("/contact")
+def contact():
+    return "<h1>Contactez notre école</h1>"
 
-@app.route('/hello', methods=['POST'])
-def hello():
-   name = request.form.get('name')
-
-   if name:
-       print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name)
-   else:
-       print('Request for hello page received with no name or blank name -- redirecting')
-       return redirect(url_for('index'))
-
-
-if __name__ == '__main__':
-   app.run()
+if __name__ == "__main__":
+    app.run()
